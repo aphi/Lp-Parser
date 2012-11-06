@@ -1,0 +1,269 @@
+/* Document Defaults */
+
+a.bluelink:active {color: #cc9900}
+a.bluelink:hover {color: #cc9900}
+a.bluelink {color: #005da0}
+a.bluelink:visited {color: #704d90}
+
+.legalpart  a.bluelink:active {color: #cc9900; text-decoration: none;}
+.legalpart  a.bluelink:hover {color: #cc9900; text-decoration: none;}
+.legalpart  a.bluelink {color: #005da0; text-decoration: none;}
+.legalpart  a.bluelink:visited {color: #704d90; text-decoration: none;}
+
+.path  a {text-decoration: none;}
+
+.navtable  a.bluelink:active {color: #cc9900; text-decoration: none;}
+.navtable  a.bluelink:hover {color: #cc9900; text-decoration: none;}
+.navtable  a.bluelink {color: #005da0; text-decoration: none;}
+.navtable  a.bluelink:visited {color: #704d90; text-decoration: none;}
+
+body, h1, h2 {font-family: Arial, Verdana, Helvetica,  sans-serif; 
+   font-size: 13px; font-style: normal; font-weight: normal; color: #000000; 
+   letter-spacing: normal; text-align: left; word-spacing: normal;}
+th {font-weight: bold; color: #ffffff;}
+code {font-family: Courier, monospace; font-size: 13px;}
+pre {font-family: Courier, monospace; font-size: 13px;}
+dd {margin-left: 15px;}
+
+/* Paragraph Styles */
+
+.Default {font-size: 13px; margin-right: 7px; margin-left: 7px;}
+.AbstractMethod {font-family: Courier, monospace; font-size: 13px; 
+   margin-right: 7px;}
+.Body {font-size: 13px; margin-left: 7px; margin-right: 7px;}
+.ShortCode {font-family: Courier, monospace; font-size: 13px;
+   background-color: #f2f2f2; width: 100%; 
+   margin-left: 7px; margin-right: 7px;}
+.ShortCodeL1 {font-family: Courier, monospace; font-size: 13px;
+   background-color: #f2f2f2; width: 100%; 
+   margin-left: 40px; margin-right: 7px;}
+.ShortCodeL2 {font-family: Courier, monospace; font-size: 13px;
+   background-color: #f2f2f2; width: 100%; 
+   margin-left: 80px; margin-right: 7px;}
+.GlossaryText {font-size: 13px; 
+   margin-left: 160px; margin-top: -30px; margin-right: 7px;}
+.GlossaryTextContinued {font-size: 13px; 
+   margin-left: 160px; margin-right: 7px;}
+.GlossaryEntry {font-size: 13px; font-weight: bold; color: #858a8b;
+    margin-top: 20px; width: 140px; margin-right: 7px;}
+.GlossaryTextItemize {font-size: 13px; margin-left: 195px; margin-right: 7px;}
+.Footnote {font-size: 10px; margin-left: 16px; 
+   margin-top: -5px; margin-right: 7px;}
+.Heading1 {font-size: 20px; margin-left: 7px; margin-right: 7px;
+   margin-bottom: 0px; margin-top: 6px; font-weight: bold; color: #858a8b;}
+.SubHead {font-size: 16px; font-weight: bold; color: #858a8b; 
+   margin-left: 7px; margin-right: 7px;}
+.Heading2 {font-size: 16px; margin-left: 7px; margin-right: 7px;
+   margin-bottom: 0px; margin-top: 6px; font-weight: bold; color: #858a8b;}
+.InsetHead1 {font-size: 16px; text-align: center; 
+   margin-right: 7px;  margin-left: 7px;
+   margin-bottom: 0px; margin-top: 6px; font-weight: bold; color: #858a8b;}
+.Heading3 {font-size: 13px; font-weight: bold; color: #858a8b;
+   margin-left: 7px; margin-right: 7px;}
+.Heading4 {font-size: 13px; font-weight: bold; font-style: italic; 
+   color: #858a8b; margin-left: 7px; margin-right: 7px;}
+.HowTo {font-size: 13px; font-weight: bold; color: #858a8b;
+   margin-left: 7px; margin-right: 7px;}
+.HowToL1 {font-size: 13px; font-weight: bold; 
+          color: #858a8b; margin-left: 40px; margin-right: 7px;}
+.HowToL2 {font-size: 13px; font-weight: bold; 
+          color: #858a8b; margin-left: 80px; margin-right: 7px;} 
+.Ignore {}
+.Note {font-weight: normal; font-size: 13px; margin: 0;}
+
+.Bulleted {font-size: 13px; margin-right: 7px; 
+   margin-top: 3px; margin-bottom: 3px;}
+.Itemize {font-size: 13px; margin-right: 7px;
+   margin-top: 3px; margin-bottom: 3px;}
+.Numbered {font-size: 13px; margin-right: 7px;
+   margin-top: 3px; margin-bottom: 3px;}
+.Subitem {font-size: 13px; margin-right: 7px;
+   margin-top: 3px; margin-bottom: 3px;}
+.IndentedL1 {font-size: 13px;  margin-left: 40px; margin-right: 7px;
+   margin-top: 3px; margin-bottom: 3px;}
+.IndentedL2 {font-size: 13px;  margin-left: 80px; margin-right: 7px;
+   margin-top: 3px; margin-bottom: 3px;}
+ul .IndentedL1 {font-size: 13px;  margin-left: 0px; margin-right: 7px; 
+   margin-top: 3px; margin-bottom: 3px;}
+ul .IndentedL2 {font-size: 13px;  margin-left: 0px; margin-right: 7px;
+   margin-top: 3px; margin-bottom: 3px;}
+ol .IndentedL1 {font-size: 13px;  margin-left: 0px; margin-right: 7px;
+   margin-top: 3px; margin-bottom: 3px;}
+ol .IndentedL2 {font-size: 13px;  margin-left: 0px; margin-right: 7px;
+   margin-top: 3px; margin-bottom: 3px;}
+
+.CodeInTable {font-family: Courier, monospace; font-size: 13px; 
+   margin-left: 7px; margin-right: 7px;}
+.Method {font-family: Courier, monospace; font-size: 13px;}
+.MethodContinued {font-family: Courier, monospace; font-size: 13px;}
+.StaticMethod {font-family: Courier, monospace; font-size: 13px;}
+.TableTitle {font-size:13px; font-style: italic; font-weight: bold; 
+   text-align: left;  margin-left: 7px; margin-right: 7px;}
+.TableTitleL1 {font-size:13px; font-style: italic; font-weight: bold; 
+   text-align: left;   margin-left: 40px; margin-right: 7px;}
+.ChapterTitle {text-align: left; font-size: 20px; color: #858a8b; 
+   font-weight: bold; margin-right: 7px;
+   margin-top: 6px; margin-left: 7px;   margin-bottom: 0px;}
+.GlossaryTitle {text-align: left; font-size: 20px; color: #858a8b; 
+   font-weight: bold; margin-right: 7px;
+   margin-top: 6px; margin-left: 7px;   margin-bottom: 0px;}
+.PrefaceTitle {text-align: left; font-size: 20px; color: #858a8b; 
+   font-weight: bold; margin-left: 7px; margin-top: 6px;
+    margin-bottom: 0px; margin-right: 7px;}
+.PartHead {text-align: left; font-size: 20px; color: #858a8b; 
+   font-weight: bold; margin-bottom: 0px; margin-top: 6px;
+   margin-left: 7px; margin-right: 7px;}
+.VirtualMethod {font-family: Courier, monospace; font-size: 13px;}
+
+.ImportantTitle {font-weight: bold; font-size: 13px; color: #d82020;}
+.NoteTitle {font-weight: bold; font-size: 13px; color: #858a8b;}
+.ReminderTitle {font-weight: bold; font-size: 13px; color: #858a8b;}
+.TipTitle {font-weight: bold; font-size: 13px; color: #858a8b;}
+.WarningTitle {font-weight: bold; font-size: 13px; color: #d82020;}
+
+
+/* Character Styles */
+
+.Default {}
+.blue {color: #0000ff}
+.bold {font-weight: bold}
+.code {}
+.emphasis {font-style: italic}
+.indexfolio {}
+.methodname {font-weight: bold}
+.terminal {font-weight: bold}
+.subscript {}
+.subscriptcode {vertical-align: sub}
+.subscriptemphasis {font-style: italic}
+.superscript {}
+.superscriptcode {vertical-align: super}
+.superscriptemphasis {font-style: italic}
+.webjump {}
+
+
+/* Tables and related styles*/
+
+.DefaultTable {border-style: solid; border-width: 1px; border-color: #808080; 
+   font-size: 13px; margin-top: 7px; margin-left: 7px; margin-right: 7px;}
+.NoBorder {border-style: none; font-size: 13px; 
+   margin-top: 7px; margin-left: 7px; margin-right: 7px;}
+.CellHeading {font-size: 13px; color: #000000; font-weight: bold;
+   text-align: left;}
+.CellBody {font-size: 13px; text-align: left; color: #000000;}
+.ShadedHead {border-style: solid; border-width: 1px; border-color: #808080; 
+   font-size: 13px; margin-top: 7px; margin-left: 7px; margin-right: 7px;}
+.ShadedHeading {background-color: #bfd6e7; font-size: 13px;
+   color: #000000; margin:0;}
+.PlainHead {border-right-style: none; border-left-style: none;
+   border-bottom-style: none; border-top-style: none;
+   font-size: 13px; margin-left: 7px; margin-top: 7px; margin-right: 7px;}
+.PlainHead .CellHeading {border-right-style: none; border-left-style: none;
+   border-bottom-style: solid; border-top-style: none;
+   border-color: #d8d8d8; border-width: 1px;
+   font-size: 13px; margin-top:13px; text-align: bottom;}
+.CodeTable {background-color: #f2f2f2; border-style: none; 
+   margin-top: 13px; width: 100%; margin-left: 7px; margin-right: 7px;}
+.CodeL1Table {background-color: #f2f2f2; border-style: none;
+   margin-top: 13px; width: 100%; margin-left: 40px; margin-right: 7px;}
+.TextInset {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; margin-top: 13px;
+   background-color: #ffffff; margin-left: 7px; margin-right: 7px;}
+
+.ImportantTable {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px; 
+   margin-right: 7px;}
+.ImportantTableIndented {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff; 
+   margin-top: 13px; margin-bottom: 13px; 
+   margin-left: 40px; margin-right: 7px;}
+.NotesTable {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-right: 7px;}
+.NotesTableIndented {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-left: 40px; margin-right: 7px;}
+.NoteTable {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-right: 7px;}
+.NoteTableIndented {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-left: 40px; margin-right: 7px;}
+.ReminderTable {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-right: 7px;}
+.ReminderTableIndented {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-left: 40px; margin-right: 7px;}
+.TipTable {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-right: 7px;}
+.TipTableIndented {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-left: 40px; margin-right: 7px;}
+.WarningTable {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-right: 7px;}
+.WarningTableIndented {border-color: #808080; border-style: solid; 
+   border-width: 1px; width: 95%; background-color: #ffffff;
+   margin-top: 13px; margin-bottom: 13px;
+   margin-left: 40px; margin-right: 7px;}
+
+
+/* Navigation and CurrentPath */
+
+.currentmanual {font-size: 10px; font-weight: bold; 
+   color: #000000; text-decoration: none; background-color: #d8d8d8;}
+
+.currentpath {font-size: 10px; color: #000000; text-decoration: none; 
+   background-color: #d8d8d8; }
+
+.path {background-color: #d8d8d8; width: 100%; 
+   border: 4px; border-color: #d8d8d8; line-height: 21px;}
+
+.separ {color: #000000; text-decoration: none; background-color: #d8d8d8;
+   font-size: 10px;}
+
+.pagenav {font-size: 11px; color: #005da0; background-color: #ffffff;
+   border-color: #ffffff; border-style: solid; text-decoration: none;}
+
+.legalpart {font-size: 10px; color: #858a8b;}
+
+
+/* Rules specific tags */
+
+.CellBody2 {font-size: 13px; margin-left: 10px; color: #000000;}
+.CellBody3 {font-size: 13px; margin-left: 20px; color: #000000;}
+.CellBody4 {font-size: 13px; margin-left: 30px; color: #000000;}
+.CellBody5 {font-size: 13px; margin-left: 40px; color: #000000;}
+.CellBody6 {font-size: 13px; margin-left: 50px; color: #000000;}
+.CellBody7 {font-size: 13px; margin-left: 60px; color: #000000;}
+
+/* Solver specific tags */
+
+.StepTable {border-color: #d0d0d0; 
+            border-style: solid;
+            border-bottom-width: 5px;
+            border-top-width: 5px;
+            border-left-width: 0;
+            border-right-width: 0;
+           }
+
+.StepNumber { font-family: Helvetica, sans-serif; 
+font-size: 11pt; font-style: normal; color: #000000; 
+background-color: #FFFFFF; text-align: left; 
+word-spacing: normal; font-weight: bold;}
+
+.StepHeading { font-family: Helvetica, sans-serif; 
+font-size: 11pt; font-style: normal; color: #000000; 
+background-color: #FFFFFF; text-align: left; 
+word-spacing: normal; font-weight: bold;}

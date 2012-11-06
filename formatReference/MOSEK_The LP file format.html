@@ -1,0 +1,501 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0043)http://docs.mosek.com/6.0/capi/node024.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>D. The LP file format</title>
+<!-- pyLaTeX: XHTML.lib.Sectioning.chapter -->
+<link href="http://docs.mosek.com/6.0/capi/styles/style.css" rel="stylesheet">
+<link href="http://docs.mosek.com/6.0/capi/styles/gstyles.css" rel="stylesheet">
+<link href="http://docs.mosek.com/6.0/capi/graphics/favicon.png" rel="shortcut icon">
+</head>
+<body>
+<div class="navigationarea">
+<table class="navigation" width="100%" cellpadding="0" cellspacing="2">
+<tbody><tr>
+<td><a href="http://docs.mosek.com/6.0/capi/node023.html" target="_self"><img src="./MOSEK_The LP file format_files/previous.png" class="navbutton-previous" alt="Previous : C. The MPS file format" border="0"></a></td>
+<td><a href="http://docs.mosek.com/6.0/capi/index.html" target="_self"><img src="./MOSEK_The LP file format_files/up.png" class="navbutton-up" alt="Up:  The MOSEK C API manual. 
+Version 6.0 (Revision 148)." border="0"></a></td>
+<td><a href="http://docs.mosek.com/6.0/capi/node025.html" target="_self"><img src="./MOSEK_The LP file format_files/next.png" class="navbutton-next" alt="Next:  E. The OPF format" border="0"></a></td>
+<td align="center" class="navtitle">The MOSEK C API manual. 
+<br>Version 6.0 (Revision 148).</td>
+<td><a href="http://docs.mosek.com/6.0/capi/index.html"><img src="./MOSEK_The LP file format_files/contents.png" class="navbutton-contents" alt="" border="0"></a></td>
+<td><a href="http://docs.mosek.com/6.0/capi/node030.html"><img src="./MOSEK_The LP file format_files/index.png" class="navbutton-index" alt="" border="0"></a></td></tr>
+</tbody>
+</table>
+
+
+<table class="trail"><tbody><tr>
+<td valign="top"><b>Previous : </b><a href="http://docs.mosek.com/6.0/capi/node023.html" target="_self">C. The MPS file format</a></td>
+<td valign="top"><b>Up : </b><a href="http://docs.mosek.com/6.0/capi/index.html" target="_self">The MOSEK C API manual. 
+<br>Version 6.0 (Revision 148).</a></td>
+<td valign="top"><b>Next : </b><a href="http://docs.mosek.com/6.0/capi/node025.html" target="_self">E. The OPF format</a></td>
+<td valign="top"><a href="http://docs.mosek.com/6.0/capi/index.html" target="_self"><b>Contents</b></a></td>
+<td valign="top"><a href="http://docs.mosek.com/6.0/capi/node030.html"><b>Index</b></a></td></tr></tbody></table>
+
+<hr>
+</div>
+
+<div>
+<h1><a name="294883200">D. The LP file format</a></h1>
+
+<div class="contents">
+<ul class="toc-level-1">
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294881688" target="_self">D.1. A warning</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294883696" target="_self">D.2. The LP file format</a>
+<ul class="toc-level-2">
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294901736" target="_self">D.2.1. The sections</a>
+<ul class="toc-level-3">
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294884344" target="_self">D.2.1.1. The objective</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294906840" target="_self">D.2.1.2. The constraints</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294914600" target="_self">D.2.1.3. Bounds</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294920992" target="_self">D.2.1.4. Variable types</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294923584" target="_self">D.2.1.5. Terminating section</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294922144" target="_self">D.2.1.6. An example</a></li>
+</ul>
+</li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294925808" target="_self">D.2.2. LP format peculiarities</a>
+<ul class="toc-level-3">
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294925592" target="_self">D.2.2.1. Comments</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294927104" target="_self">D.2.2.2. Names</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294929544" target="_self">D.2.2.3. Variable bounds</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294930120" target="_self">D.2.2.4. MOSEK specific extensions to the LP format</a></li>
+</ul>
+</li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294932560" target="_self">D.2.3. The strict LP format</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294934792" target="_self">D.2.4. Formatting of an LP file</a>
+<ul class="toc-level-3">
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294936232" target="_self">D.2.4.1. Speeding up file reading</a></li>
+<li><a href="http://docs.mosek.com/6.0/capi/node024.html#294936800" target="_self">D.2.4.2. Unnamed constraints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<hr width="100%" class="tocseparator">
+</div>
+
+<p> <a name="idx-207160816">	</a> <a name="app-sec-lpformat">	</a></p>
+
+<p>MOSEK supports the LP file format with some extensions i.e. MOSEK can read and write LP formatted files.</p>
+
+<div>
+<h1><a name="294881688">D.1. A warning</a></h1>
+
+<p>The LP format is not a well-defined standard and hence different optimization packages may interpretate a specific LP formatted file differently.</p>
+
+</div>
+
+<div>
+<h1><a name="294883696">D.2. The LP file format</a></h1>
+
+<p>The LP file format can specify problems on the form </p>
+
+<table width="100%" class="displaymath" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1184.png" alt="\begin{displaymath}\nonumber{}\begin{array}{lccccl}\nonumber{}\mbox{minimize/maximize} &amp;  &amp;  &amp; c^{T}x+\frac{1}{2}q^{o}(x) &amp;  &amp; \\\nonumber{}\mbox{subject to} &amp; l^{c} &amp; \leq{} &amp; Ax+\frac{1}{2}q(x) &amp; \leq{} &amp; u^{c},\\\nonumber{} &amp; l^{x} &amp; \leq{} &amp; x &amp; \leq{} &amp; u^{x},\\\nonumber{} &amp;  &amp;  &amp; x_{\mathcal{J}}\mbox{integer}, &amp;  &amp;\end{array}\end{displaymath}"></td></tr>
+</tbody>
+</table>
+
+<p>where </p>
+
+<ul class="itemize">
+<li><span class="math"><img src="./MOSEK_The LP file format_files/math131.png" alt="[[MathCmd 131]]"></span> is the vector of decision variables.</li>
+<li><span class="math"><img src="./MOSEK_The LP file format_files/math132.png" alt="[[MathCmd 132]]"></span> is the linear term in the objective.</li>
+<li>
+<p><span class="math"><img src="./MOSEK_The LP file format_files/math1187.png" alt="[[MathCmd 1187]]"></span> is the quadratic term in the objective where </p>
+
+<table width="100%" class="displaymath" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1188.png" alt="\begin{displaymath}\nonumber{}q^{o}(x)=x^{T}Q^{o}x\end{displaymath}"></td></tr>
+</tbody>
+</table>
+
+<p>  and it is assumed that  </p>
+
+<table width="100%" class="equation" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1189.png" alt="\begin{math}\nonumber{}Q^{o}=(Q^{o})^{T}.\end{math}"></td>
+<td>(D.2.1)</td></tr>
+</tbody>
+</table>
+</li>
+<li><span class="math"><img src="./MOSEK_The LP file format_files/math133.png" alt="[[MathCmd 133]]"></span> is the constraint matrix.</li>
+<li><span class="math"><img src="./MOSEK_The LP file format_files/math134.png" alt="[[MathCmd 134]]"></span> is the lower limit on the activity for the constraints.</li>
+<li><span class="math"><img src="./MOSEK_The LP file format_files/math135.png" alt="[[MathCmd 135]]"></span> is the upper limit on the activity for the constraints.</li>
+<li><span class="math"><img src="./MOSEK_The LP file format_files/math136.png" alt="[[MathCmd 136]]"></span> is the lower limit on the activity for the variables.</li>
+<li><span class="math"><img src="./MOSEK_The LP file format_files/math137.png" alt="[[MathCmd 137]]"></span> is the upper limit on the activity for the variables.</li>
+<li>
+<p><span class="math"><img src="./MOSEK_The LP file format_files/math1122.png" alt="[[MathCmd 1122]]"></span> is a vector of quadratic functions. Hence,  </p>
+
+<table width="100%" class="displaymath" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1196.png" alt="\begin{displaymath}\nonumber{}q_{i}(x)=x^{T}Q^{i}x\end{displaymath}"></td></tr>
+</tbody>
+</table>
+
+<p>  where it is assumed that  </p>
+
+<table width="100%" class="equation" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1124.png" alt="\begin{math}\nonumber{}Q^{i}=(Q^{i})^{T}.\end{math}"></td>
+<td>(D.2.2)</td></tr>
+</tbody>
+</table>
+</li>
+<li><span class="math"><img src="./MOSEK_The LP file format_files/math1127.png" alt="[[MathCmd 1127]]"></span> is an index set of the integer constrained variables. </li>
+</ul>
+
+<div>
+<h2><a name="294901736">D.2.1. The sections</a></h2>
+
+<p>An LP formatted file contains a number of sections specifying the objective, constraints, variable bounds, and variable types. The section keywords may be any mix of upper and lower case letters.</p>
+
+<div>
+<h3><a name="294884344">D.2.1.1. The objective</a></h3>
+
+<p>The first section beginning with one of the keywords </p>
+
+<pre class="verbatim">max
+maximum
+maximize
+min
+minimum
+minimize
+</pre>
+
+<p>defines the objective sense and the objective function, i.e. </p>
+
+<table width="100%" class="displaymath" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1199.png" alt="\begin{displaymath}\nonumber{}c^{T}x+\frac{1}{2}x^{T}Q^{o}x.\end{displaymath}"></td></tr>
+</tbody>
+</table>
+
+<p> The objective may be given a name by writing </p>
+
+<pre class="verbatim">myname:
+</pre>
+
+<p>before the expressions. If no name is given, then the objective is named <tt class="tt">obj</tt>.</p>
+
+<p>The objective function contains linear and quadratic terms. The linear terms are written as in the example </p>
+
+<pre class="verbatim">4 x1 + x2 - 0.1 x3
+</pre>
+
+<p>and so forth. The quadratic terms are written in square brackets (<tt class="tt">[</tt> <tt class="tt">]</tt>) and are either squared or multiplied as in the examples </p>
+
+<pre class="verbatim">x1 ^ 2
+</pre>
+
+<p>and </p>
+
+<pre class="verbatim">x1 * x2
+</pre>
+
+<p>There may be zero or more pairs of brackets containing quadratic expressions.</p>
+
+<p>An example of an objective section is: </p>
+
+<pre class="verbatim">minimize
+  myobj: 4 x1 + x2 - 0.1 x3 + [ x1 ^ 2 + 2.1 x1 * x2 ]/2
+</pre>
+
+<p>Please note that the quadratic expressions are multiplied with <span class="math"><img src="./MOSEK_The LP file format_files/math1200.png" alt="[[MathCmd 1200]]"></span>, so that the above expression means </p>
+
+<table width="100%" class="displaymath" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1201.png" alt="\begin{displaymath}\nonumber{}\mathrm{minimize}4x_{1}+x_{2}-0.1\cdot x_{3}+\frac{1}{2}(x_{1}^{2}+2.1\cdot x_{1}\cdot x_{2})\end{displaymath}"></td></tr>
+</tbody>
+</table>
+
+<p>If the same variable occurs more than once in the linear part, the coefficients are added, so that <tt class="tt">4 x1 + 2 x1</tt> is equivalent to <tt class="tt">6 x1</tt>. In the quadratic expressions <tt class="tt">x1 * x2</tt> is equivalent to <tt class="tt">x2 * x1</tt> and as in the linear part , if the same variables multiplied or squared occur several times their coefficients are added.</p>
+
+</div>
+
+<div>
+<h3><a name="294906840">D.2.1.2. The constraints</a></h3>
+
+<p>The second section beginning with one of the keywords </p>
+
+<pre class="verbatim">subj to
+subject to
+s.t.
+st
+</pre>
+
+<p>defines the linear constraint matrix (<span class="math"><span class="mi">A</span></span>) and the quadratic matrices (<span class="math"><img src="./MOSEK_The LP file format_files/math1125.png" alt="[[MathCmd 1125]]"></span>).</p>
+
+<p>A constraint contains a name (optional), expressions adhering to the same rules as in the objective and a bound: </p>
+
+<pre class="verbatim">subject to
+  con1: x1 + x2 + [ x3 ^ 2 ]/2 &lt;= 5.1
+</pre>
+
+<p>The bound type (here <tt class="tt">&lt;=</tt>) may be any of <tt class="tt">&lt;</tt>, <tt class="tt">&lt;=</tt>, <tt class="tt">=</tt>, <tt class="tt">&gt;</tt>, <tt class="tt">&gt;=</tt> (<tt class="tt">&lt;</tt> and <tt class="tt">&lt;=</tt> mean the same), and the bound may be any number.</p>
+
+<p>In the standard LP format it is not possible to define more than one bound, but MOSEK supports defining ranged constraints by using double-colon (<tt class="tt">“::”</tt>) instead of a single-colon (“<tt class="tt">:</tt>”) after the constraint name, i.e. </p>
+
+<table width="100%" class="equation" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1203.png" alt="\begin{math}\nonumber{}-5\leq{}x_{1}+x_{2}\leq{}5\end{math}"></td>
+<td><a name="eq:lpranged">	</a>(D.2.3)</td></tr>
+</tbody>
+</table>
+
+<p> may be written as </p>
+
+<pre class="verbatim">con:: -5 &lt; x_1 + x_2 &lt; 5
+</pre>
+
+<p>By default MOSEK writes ranged constraints this way.</p>
+
+<p>If the files must adhere to the LP standard, ranged constraints must either be split into upper bounded and lower bounded constraints or be written as en equality with a slack variable. For example the expression (<a href="http://docs.mosek.com/6.0/capi/node024.html#eq:lpranged">D.2.3</a>) may be written as </p>
+
+<table width="100%" class="displaymath" border="0">
+<tbody><tr>
+<td width="100%" align="center"><img src="./MOSEK_The LP file format_files/math1204.png" alt="\begin{displaymath}\nonumber{}x_{1}+x_{2}-sl_{1}=0,-5\leq{}sl_{1}\leq{}5.\end{displaymath}"></td></tr>
+</tbody>
+</table>
+
+</div>
+
+<div>
+<h3><a name="294914600">D.2.1.3. Bounds</a></h3>
+
+<p>Bounds on the variables can be specified in the bound section beginning with one of the keywords </p>
+
+<pre class="verbatim">bound
+bounds
+</pre>
+
+<p>The bounds section is optional but should, if present, follow the <tt class="tt">subject to</tt> section. All variables listed in the bounds section must occur in either the objective or a constraint.</p>
+
+<p>The default lower and upper bounds are <span class="math"><span class="mn">0</span></span> and <span class="math"><span class="mo">+</span>∞</span>. A variable may be declared free with the keyword <tt class="tt">free</tt>, which means that the lower bound is <span class="math"><span class="mo">-</span>∞</span> and the upper bound is <span class="math"><span class="mo">+</span>∞</span>. Furthermore it may be assigned a finite lower and upper bound. The bound definitions for a given variable may be written in one or two lines, and bounds can be any number or <span class="math"><img src="./MOSEK_The LP file format_files/math1205.png" alt="[[MathCmd 1205]]"></span> (written as <tt class="tt">+inf</tt>/<tt class="tt">-inf</tt>/<tt class="tt">+infinity</tt>/<tt class="tt">-infinity</tt>) as in the example </p>
+
+<pre class="verbatim">bounds
+  x1 free
+  x2 &lt;= 5
+  0.1 &lt;= x2
+  x3 = 42
+  2 &lt;= x4 &lt; +inf
+</pre>
+
+</div>
+
+<div>
+<h3><a name="294920992">D.2.1.4. Variable types</a></h3>
+
+<p>The final two sections are optional and must begin with one of the keywords </p>
+
+<pre class="verbatim">bin
+binaries
+binary
+</pre>
+
+<p>and </p>
+
+<pre class="verbatim">gen
+general
+</pre>
+
+<p>Under <tt class="tt">general</tt> all integer variables are listed, and under <tt class="tt">binary</tt> all binary (integer variables with bounds 0 and 1) are listed: </p>
+
+<pre class="verbatim">general
+  x1 x2
+binary
+  x3 x4
+</pre>
+
+<p>Again, all variables listed in the binary or general sections must occur in either the objective or a constraint.</p>
+
+</div>
+
+<div>
+<h3><a name="294923584">D.2.1.5. Terminating section</a></h3>
+
+<p>Finally, an LP formatted file must be terminated with the keyword </p>
+
+<pre class="verbatim">end
+</pre>
+
+</div>
+
+<div>
+<h3><a name="294922144">D.2.1.6. An example</a></h3>
+
+<p>A simple example of an LP file with two variables, four constraints and one integer variable is: </p>
+
+<pre class="verbatim">minimize
+  -10 x1 -9 x2
+subject to
+  0.7 x1 +       x2 &lt;= 630
+  0.5 x1 + 0.833 x2 &lt;= 600
+      x1 + 0.667 x2 &lt;= 708
+  0.1 x1 + 0.025 x2 &lt;= 135
+bounds
+  10 &lt;= x1
+  x1 &lt;= +inf
+  20 &lt;= x2 &lt;= 500
+general
+  x1
+end
+</pre>
+
+</div>
+
+</div>
+
+<div>
+<h2><a name="294925808">D.2.2. LP format peculiarities</a></h2>
+
+<div>
+<h3><a name="294925592">D.2.2.1. Comments</a></h3>
+
+<p>Anything on a line after a “<span class="math"><img src="./MOSEK_The LP file format_files/math1206.png" alt="[[MathCmd 1206]]"></span>” is ignored and is treated as a comment.</p>
+
+</div>
+
+<div>
+<h3><a name="294927104">D.2.2.2. Names</a></h3>
+
+<p> <a name="ch-lpformat-sec-names">	</a></p>
+
+<p>A name for an objective, a constraint or a variable may contain the letters a-z, A-Z, the digits 0-9 and the characters </p>
+
+<pre class="verbatim">!"#$%&amp;()/,.;?@_'`{}|~
+</pre>
+
+<p>The first character in a name must not be a number, a period or the letter '<tt class="tt">e</tt>' or '<tt class="tt">E</tt>'. Keywords must not be used as names.</p>
+
+<p><b>It is strongly recommended not to use double quotes (<tt class="tt">"</tt>) in names.</b></p>
+
+</div>
+
+<div>
+<h3><a name="294929544">D.2.2.3. Variable bounds</a></h3>
+
+<p>Specifying several upper or lower bounds on one variable is possible but MOSEK uses only the tightest bounds. If a variable is fixed (with <tt class="tt">=</tt>), then it is considered the tightest bound.</p>
+
+</div>
+
+<div>
+<h3><a name="294930120">D.2.2.4. MOSEK specific extensions to the LP format</a></h3>
+
+<p>Some optimization software packages employ a more strict definition of the LP format that the one used by MOSEK. The limitations imposed by the strict LP format are the following: </p>
+
+<ul class="itemize">
+<li>Quadratic terms in the constraints are not allowed. </li>
+<li>Names can be only 16 characters long. </li>
+<li>Lines must not exceed 255 characters in length. </li>
+</ul>
+
+<p> If an LP formatted file created by MOSEK should satisfies the strict definition, then the parameter </p>
+
+<pre class="verbatim">MSK_IPAR_WRITE_LP_STRICT_FORMAT
+</pre>
+
+<p>should be set; note, however, that some problems cannot be written correctly as a strict LP formatted file. For instance, all names are truncated to 16 characters and hence they may loose their uniqueness and change the problem.</p>
+
+<p>To get around some of the inconveniences converting from other problem formats, MOSEK allows lines to contain 1024 characters and names may have any length (shorter than the 1024 characters).</p>
+
+<p>Internally in MOSEK names may contain any (printable) character, many of which cannot be used in LP names. Setting the parameters </p>
+
+<pre class="verbatim">MSK_IPAR_READ_LP_QUOTED_NAMES
+</pre>
+
+<p>and </p>
+
+<pre class="verbatim">MSK_IPAR_WRITE_LP_QUOTED_NAMES
+</pre>
+
+<p>allows MOSEK to use quoted names. The first parameter tells MOSEK to remove quotes from quoted names e.g, <tt class="tt">"x1"</tt>, when reading LP formatted files. The second parameter tells MOSEK to put quotes around any semi-illegal name (names beginning with a number or a period) and fully illegal name (containing illegal characters). As double quote is a legal character in the LP format, quoting semi-illegal names makes them legal in the pure LP format as long as they are still shorter than 16 characters. Fully illegal names are still illegal in a pure LP file.</p>
+
+</div>
+
+</div>
+
+<div>
+<h2><a name="294932560">D.2.3. The strict LP format</a></h2>
+
+<p>The LP format is not a formal standard and different vendors have slightly different interpretations of the LP format. To make MOSEK's definition of the LP format more compatible whith the definitions of other vendors use the paramter setting </p>
+
+<pre class="verbatim">MSK_IPAR_WRITE_LP_STRICT_FORMAT MSK_ON
+</pre>
+
+<p>This setting may lead to truncation of some names and hence to an invalid LP file. The simple solution to this problem is to use the paramter setting </p>
+
+<pre class="verbatim">MSK_IPAR_WRITE_GENERIC_NAMES MSK_ON
+</pre>
+
+<p>which will cause all names to be renamed systematically in the output file.</p>
+
+</div>
+
+<div>
+<h2><a name="294934792">D.2.4. Formatting of an LP file</a></h2>
+
+<p>A few parameters control the visual formatting of LP files written by MOSEK in order to make it easier to read the files. These parameters are </p>
+
+<pre class="verbatim">MSK_IPAR_WRITE_LP_LINE_WIDTH
+MSK_IPAR_WRITE_LP_TERMS_PER_LINE
+</pre>
+
+<p>The first parameter sets the maximum number of characters on a single line. The default value is 80 corresponding roughly to the width of a standard text document.</p>
+
+<p>The second parameter sets the maximum number of terms per line; a term means a sign, a coefficient, and a name (for example “<tt class="tt">+ 42 elephants</tt>”). The default value is 0, meaning that there is no maximum.</p>
+
+<div>
+<h3><a name="294936232">D.2.4.1. Speeding up file reading</a></h3>
+
+<p>If the input file should be read as fast as possible using the least amount of memory, then it is important to tell MOSEK how many non-zeros, variables and constraints the problem contains. These values can be set using the parameters </p>
+
+<pre class="verbatim">MSK_IPAR_READ_CON
+MSK_IPAR_READ_VAR
+MSK_IPAR_READ_ANZ
+MSK_IPAR_READ_QNZ
+</pre>
+
+</div>
+
+<div>
+<h3><a name="294936800">D.2.4.2. Unnamed constraints</a></h3>
+
+<p>Reading and writing an LP file with MOSEK may change it superficially. If an LP file contains unnamed constraints or objective these are given their generic names when the file is read (however unnamed constraints in MOSEK are written without names).</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="navigationarea">
+<table class="navigation" width="100%" cellpadding="0" cellspacing="2">
+<tbody><tr>
+<td><a href="http://docs.mosek.com/6.0/capi/node023.html" target="_self"><img src="./MOSEK_The LP file format_files/previous.png" class="navbutton-previous" alt="Previous : C. The MPS file format" border="0"></a></td>
+<td><a href="http://docs.mosek.com/6.0/capi/index.html" target="_self"><img src="./MOSEK_The LP file format_files/up.png" class="navbutton-up" alt="Up:  The MOSEK C API manual. 
+Version 6.0 (Revision 148)." border="0"></a></td>
+<td><a href="http://docs.mosek.com/6.0/capi/node025.html" target="_self"><img src="./MOSEK_The LP file format_files/next.png" class="navbutton-next" alt="Next:  E. The OPF format" border="0"></a></td>
+<td align="center" class="navtitle">The MOSEK C API manual. 
+<br>Version 6.0 (Revision 148).</td>
+<td><a href="http://docs.mosek.com/6.0/capi/index.html"><img src="./MOSEK_The LP file format_files/contents.png" class="navbutton-contents" alt="" border="0"></a></td>
+<td><a href="http://docs.mosek.com/6.0/capi/node030.html"><img src="./MOSEK_The LP file format_files/index.png" class="navbutton-index" alt="" border="0"></a></td></tr>
+</tbody>
+</table>
+
+
+<table class="trail"><tbody><tr>
+<td valign="top"><b>Previous : </b><a href="http://docs.mosek.com/6.0/capi/node023.html" target="_self">C. The MPS file format</a></td>
+<td valign="top"><b>Up : </b><a href="http://docs.mosek.com/6.0/capi/index.html" target="_self">The MOSEK C API manual. 
+<br>Version 6.0 (Revision 148).</a></td>
+<td valign="top"><b>Next : </b><a href="http://docs.mosek.com/6.0/capi/node025.html" target="_self">E. The OPF format</a></td>
+<td valign="top"><a href="http://docs.mosek.com/6.0/capi/index.html" target="_self"><b>Contents</b></a></td>
+<td valign="top"><a href="http://docs.mosek.com/6.0/capi/node030.html"><b>Index</b></a></td></tr></tbody></table>
+
+<hr>
+</div>
+
+<div class="gentime">Mon Oct 29 07:20:57 2012</div>
+</body></html>

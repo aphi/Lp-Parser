@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0051)http://lpsolve.sourceforge.net/5.1/CPLEX-format.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>CPLEX LP file format</title>
+		<style type="text/css"> BODY { font-family:verdana,arial,helvetica; margin:0; }
+	</style>
+	</head>
+	<body>
+		<table style="TABLE-LAYOUT:fixed" class="clsContainer" cellpadding="15" cellspacing="0" width="100%" border="0">
+			<tbody><tr>
+				<td valign="top">
+					<p></p><h1 align="left"><u>CPLEX LP file format</u></h1>
+					<p>The CPLEX LP file format provides a facility for entering a problem in a
+						natural, algebraic LP formulation from the keyboard. The problem can be
+						modified and saved from within lpsolve. This procedure is one way to create a
+						file in a format that lpsolve can read. An alternative technique is to create a
+						similar file using a standard text editor and to read it into lpsolve.</p>
+						
+					<p>The CPLEX LP format is provided as an input alternative to the MPS file format.
+						An LP format file may be easier to generate than an MPS file if your problem
+						already exists in an algebraic format or if you have an application that
+						generates the problem file more readily in algebraic format (such as a C
+						application).</p>
+						
+					<p>Note that the CPLEX LP format is not the same as the lpsolve LP format.
+					   See <a href="http://lpsolve.sourceforge.net/5.1/lp-format.htm">LP file format</a> for a description about
+					   the native lpsolve lp format. To read/write this format from lpsolve, you need
+					   an XLI (see <a href="http://lpsolve.sourceforge.net/5.1/XLI.htm">External Language Interfaces</a>). The XLI for the CPLEX
+					   format is called xli_CPLEX.<br>
+					   For example:</p>
+					   
+<pre>lp_solve -rxli xli_CPLEX input.lpt
+lp_solve -mps input.mps -wxli xli_CPLEX output.lpt
+</pre>
+					   
+					<p>lpsolve will accept any problem saved in an ASCII file provided that it adheres
+						to the following syntax rules.
+					</p>
+					<a name="157717">
+						<h3>Syntax Rules of LP File Format</h3>
+					</a>
+					<ol>
+						<a name="157718">
+							</a><li value="1"><a name="157718">
+							Anything that follows a backslash (\) is a comment and will be ignored until a
+							return is encountered. Blank lines are also ignored. Blank and comment lines
+							may be placed anywhere and as frequently as you want in the file. </a>
+						<p><a name="157738"></a></p><a name="157738">
+						</a></li><li value="2"><a name="157738">
+							In general, white space between characters is irrelevant as it is skipped when
+							a file is read. However, white space is not allowed in the keywords used to
+							introduce a new section, such as <code>MAX</code>, <code>MIN</code>, <code>ST</code>,
+							or <code>BOUNDS</code>. Also the keywords must be separated by white space from
+							the rest of the file and must be at the beginning of a line. The maximum line
+							length allowed is 255 characters. </a>
+							<p></p>
+						</li>
+					</ol>
+					<dl>
+						<a name="157736"><dt>
+								</dt></a><dd><a name="157736">
+									Skipping spaces may cause lpsolve to misinterpret (and accept) an invalid
+									entry, such as the following:
+									<p>
+										<table border="0" bgcolor="#eeeeee" width="100%" id="Table1">
+											<tbody><tr>
+												<td><pre><a name="157770"> x1 x2 = 0
+</a><a name="157777">
+</a></pre>
+												</td>
+											</tr>
+										</tbody></table>
+									</p></a><p><a name="157736"></a>
+						</p><p><a name="157778"></a></p><a name="157778">
+						</a></dd><dt><a name="157778">
+							</a></dt><dd><a name="157778">
+								If the user intended to enter that example as a nonlinear constraint-not valid
+								in LP format, lpsolve would instead interpret it as a constraint specifying
+								that one variable named <code>x1x2</code> must be equal to zero. </a>
+								<p></p>
+							</dd>
+					</dl>
+					<ol>
+						<a name="157784">
+							</a><li value="3"><a name="157784">
+								The problem statement must begin with the word <code>MINIMIZE</code> or <code>MAXIMIZE</code>,
+								<code>MINIMUM</code> or <code>MAXIMUM</code>, or the abbreviations <code>MIN</code>
+								or <code>MAX</code>, in any combination of upper- and lower-case
+							characters. The word introduces the objective function section. </a>
+						<p><a name="157797"></a></p><a name="157797">
+						</a></li><li value="4"><a name="157797">
+							Variables can be named anything provided that the name does not exceed 16
+							characters, all of which must be alphanumeric (a-z, A-Z, 0-9) or one of these
+							symbols: ! " # $ % &amp; ( ) / , . ; ? @ _ ` ' { } | ~. Longer names will be
+							truncated to 16 characters. A variable name cannot begin with a number or a
+							period. </a>
+							<p></p>
+						</li>
+					</ol>
+					<dl>
+						<a name="157811"><dt>
+								</dt></a><dd><a name="157811">
+									The letter <code>E</code> or <code>e</code>, alone or followed by other valid
+									symbols, or followed by another <code>E</code> or <code>e</code>, should be
+									avoided as this notation is reserved for exponential entries. Thus, variables
+									cannot be named <code>e9</code>, <code>E-24</code>, <code>E8cats</code>, or
+									other names that could be interpreted as an exponent. Even variable names such
+									as <code>eels</code> or <code>example</code> can cause a read error,
+							depending on their placement in an input line. </a>
+						<p><a name="157809"></a></p><a name="157809">
+						</a></dd><dt><a name="157809">
+							</a></dt><dd><a name="157809">
+								Also, the following characters are not valid in variable names (in order to
+								allow for quadratic objective information): ^, *, [ and ]. </a>
+								<p></p>
+							</dd>
+					</dl>
+					<ol>
+						<a name="157824">
+							</a><li value="5"><a name="157824">
+								The objective function definition must follow <code>MINIMIZE</code>/<code>MAXIMIZE</code>.
+								It may be entered on multiple lines as long as neither a variable, nor a
+								constant, nor a sense indicator is split by a return. For example, this
+								objective function <code>1x1 + 2x2 +3x3</code> can be entered like this:
+								<p>
+									<table border="0" bgcolor="#eeeeee" width="100%" id="Table2">
+										<tbody><tr>
+											<td><pre><a name="157828">1x1 + 2x2
+</a><a name="157841">+ 3x3
+</a><a name="157842">
+</a></pre>
+											</td>
+										</tr>
+									</tbody></table>
+								</p></a><p><a name="157824">
+						</a>
+						</p><p></p>
+						</li>
+					</ol>
+					<dl>
+						<a name="157829"><dt>
+								</dt></a><dd><a name="157829">
+									but not like this:
+									<p>
+										<table border="0" bgcolor="#eeeeee" width="100%" id="Table3">
+											<tbody><tr>
+												<td><pre><a name="157832">1x1 + 2x
+</a><a name="157847">2 + 3x3         \ a bad idea
+</a><a name="157848">
+</a></pre>
+												</td>
+											</tr>
+										</tbody></table>
+									</p></a><p><a name="157829"></a>
+						</p><p><a name="157849"></a></p><a name="157849">
+						</a></dd><dt><a name="157849">
+							</a></dt><dd><a name="157849">
+								because the second style splits the variable name <code>x2</code> by a return.
+								</a>
+								<p></p>
+							</dd>
+					</dl>
+					<ol>
+						<a name="157754">
+							</a><li value="6"><a name="157754">
+								The objective function may be named by typing a name and a colon before the
+								objective function. The objective function name and the colon must appear on
+								the same line. Objective function names must conform to the same guidelines as
+								variable names (Rule </a><a href="http://lpsolve.sourceforge.net/5.1/CPLEX-format.htm#157797">4</a>).
+						<p><a name="157865"></a></p><a name="157865">
+						</a></li><li value="7"><a name="157865">
+							The constraints section is introduced by the keyword <code>SUBJECT TO</code>.
+							This expression can also appear as <code>such that</code>, <code>st</code>, <code>S.T.</code>,
+							or <code>ST.</code> in any mix of upper- and lower-case characters. One of
+							these expressions must precede the first constraint and be separated from it by
+							at least one space. </a>
+							<p><a name="157869"></a></p><a name="157869">
+						</a></li><li value="8"><a name="157869">
+							Each constraint definition must begin on a new line. A constraint may be named
+							by typing a name and a colon before the constraint. The constraint name and the
+							colon must appear on the same line. Constraint names must adhere to the same
+							guidelines as variable names (Rule </a><a href="http://lpsolve.sourceforge.net/5.1/CPLEX-format.htm#157797">4</a>). If
+							no constraint names are specified, lpsolve will assign the names <code>R1</code>,
+							<code>R2</code>, <code>R3</code>, etc. 
+							<p><a name="157942"></a></p><a name="157942">
+						</a></li><li value="9"><a name="157942">
+							The constraints are entered in the same way as the objective function; however,
+							a constraint must be followed by an indication of its sense and a right-hand
+							side coefficient. The right-hand side coefficient must be typed on the same
+							line as the sense indicator. Acceptable sense indicators are &lt;, &lt;=,
+							=&lt;, &gt;, &gt;=, =&gt;, and =. These are interpreted as =, =, =, =, =, = and
+							=, respectively. </a>
+							<p></p>
+						</li>
+					</ol>
+					<dl>
+						<a name="157850"><dt>
+								</dt></a><dd><a name="157850">
+									For example, here is a named constraint:
+									<p>
+										<table border="0" bgcolor="#eeeeee" width="100%" id="Table4">
+											<tbody><tr>
+												<td><pre><a name="158874">time: x1 + x2 &lt;= 10
+</a><a name="158876">
+</a></pre>
+												</td>
+											</tr>
+										</tbody></table>
+									</p></a><p><a name="157850"></a>
+						</p><p></p>
+						</dd>
+					</dl>
+					<ol>
+						<a name="158004">
+							</a><li value="10"><a name="158004">
+								The optional <code>BOUNDS</code> section follows the mandatory constraint
+								section. It is preceded by the word <code>bounds</code> or <code>bound</code>
+							in any mix of lower- and upper-case characters. </a>
+						<p><a name="158005"></a></p><a name="158005">
+						</a></li><li value="11"><a name="158005">
+							Each bound definition must begin on a new line. The format for a bound is<em> l</em><sub>n</sub>=<em>x</em><sub>n
+							</sub><em>= u</em><sub>n </sub>except in the following cases: </a>
+							<p></p>
+						</li>
+					</ol>
+					<dl>
+						<a name="158001"><dt>
+								</dt></a><dd><a name="158001">
+									Upper and lower bounds can also be entered separately as <em>l</em><sub>n</sub>=<em>x</em><sub>n</sub>
+									and <em>x</em><sub>n</sub><em> = u</em><sub>n</sub> </a>
+						<p><a name="158016"></a></p><a name="158016">
+						</a></dd><dt><a name="158016">
+							</a></dt><dd><a name="158016">
+								with the default lower bound of 0 (zero) and the default upper bound of +8
+								remaining in effect until the bound is explicitly changed. </a>
+								<p><a name="158017"></a></p><a name="158017">
+								</a></dd><dt><a name="158017">
+									</a></dt><dd><a name="158017">
+										Bounds that fix a variable can be entered as simple equalities. For example, <code>x5
+											= 5.6</code> is equivalent to <code>5.6 &lt;= x5 &lt;= 5.6</code>. </a>
+										<p><a name="158033"></a></p><a name="158033">
+										</a></dd><dt><a name="158033">
+											</a></dt><dd><a name="158033">
+												The bounds +8 (positive infinity) and -8 (negative infinity) must be entered as
+												words: <code>+infinity</code>, <code>-infinity</code>,<code> +inf</code>, <code>-inf</code>.
+												</a>
+												<p><a name="158044"></a></p><a name="158044">
+												</a></dd><dt><a name="158044">
+													</a></dt><dd><a name="158044">
+														A variable with a negative infinity lower bound and positive infinity upper
+														bound may be entered as <code>free</code>, in any mix of upper- and lower-case
+														characters, with a space separating the variable name and the word <code>free</code>.
+														For example, <code>x7 free</code> is equivalent to <code>- infinity &lt;= x7 &lt;=
+															+ infinity</code>. </a>
+														<p></p>
+													</dd>
+					</dl>
+					<ol>
+						<a name="157973">
+							</a><li value="12"><a name="157973">
+								The file must end with the word <code>end</code> in any combination of upper-
+								and lower-case characters, alone on a line, when it is created with the <code>enter</code>
+							command. This word is not required for files that are read in to lpsolve, but
+							it is strongly recommended. Files that have been corrupted can frequently be
+							detected by a missing last line. </a>
+						<p><a name="158045"></a></p><a name="158045">
+						</a></li><li value="13"><a name="158045">
+							To specify any of the variables as general integer variables, add a <code>GENERAL</code>
+							section; to specify any of the variables as binary integer variables, add a <code>BINARY</code>
+							section. The <code>GENERAL</code> and <code>BINARY</code> sections follow the <code>
+								BOUNDS</code> section, if one is present; otherwise, they follow the
+							constraints section. Either of the <code>GENERAL</code> or <code>BINARY</code> sections
+							can precede the other. The <code>GENERAL</code> section is preceded by the word <code>
+								GENERAL</code>, <code>GENERALS</code>, or <code>GEN</code> that must
+							appear alone on a line. The following line or lines should list the names of
+							all variables that are to be restricted to general integer values, separated
+							by at least one space. The <code>BINARY</code> section is preceded by the word <code>
+								BINARY</code>, <code>BINARIES</code>, or <code>BIN</code> that must appear
+							alone on a line. The following line or lines should list the names of all
+							variables that are to be restricted to binary integer values, separated by at
+							least one space. Binary variables are automatically given bounds of 0 (zero)
+							and 1 (one), unless alternative bounds are specified in the <code>BOUNDS</code>
+							section, in which case a warning message is issued. </a>
+							<p></p>
+						</li>
+					</ol>
+					<dl>
+						<a name="158090"><dt>
+								</dt></a><dd><a name="158090">
+									Here is an example of a problem formulation in LP format where <code>x4</code> is
+									a general integer:
+									<p>
+										<table border="0" bgcolor="#eeeeee" width="100%" id="Table5">
+											<tbody><tr>
+												<td><pre><a name="158093">Maximize
+</a><a name="158102"> obj: x1 + 2 x2 + 3 x3 + x4
+</a><a name="158103">Subject To
+</a><a name="158104"> c1: - x1 + x2 + x3 + 10 x4 &lt;= 20
+</a><a name="158105"> c2: x1 - 3 x2 + x3 &lt;= 30
+</a><a name="158106"> c3: x2 - 3.5 x4 = 0
+</a><a name="158107">Bounds
+</a><a name="158108"> 0 &lt;= x1 &lt;= 40
+</a><a name="158109"> 2 &lt;= x4 &lt;= 3
+</a><a name="158110">General
+</a><a name="158111"> x4
+</a><a name="158112">End
+</a><a name="158113">
+</a></pre>
+												</td>
+											</tr>
+										</tbody></table>
+									</p></a><p><a name="158090"></a>
+						</p><p><a name="158118"></a></p><a name="158118">
+						</a></dd><dt><a name="158118">
+							</a></dt><dd><a name="158118">
+								<p></p>
+							</a></dd><a name="158118">
+					</a></dl><a name="158118">
+					<p>
+						</p><dl>
+						</dl>
+					</a>
+				</td>
+			</tr>
+		</tbody></table>
+	
+
+</body></html>

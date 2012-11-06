@@ -1,0 +1,7 @@
+.LP file parser to generate Python objects representing the problem (aMatrix, rowOrder, colOrder, objective, pName, colRange)
+
+parser is able to parse constraint and objective expressions
+
+need to clean up code and make work on multi-line constraints (i.e. breaking the context-free nature slightly, to get parser to realise the first part is not a second objective)
+
+need to implement the other lp file rules regarding variable bounds, commenting etc

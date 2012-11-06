@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">
+<!-- saved from url=(0101)http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex5.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025">
+<meta name="LASTUPDATED" content="09/20/03 21:03:25">
+<meta name="ILOGTEMPLATE" content="$ILOGTemplateVersion;">
+<link rel="StyleSheet" href="./CPLEX_LP File Format_files/doc.css" type="text/css" media="screen">
+<title>LP File Format  </title>
+</head>
+
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<table class="path" cellspacing="0" cellpadding="0" border="0" width="100%" summary="Navigation table">
+<tbody><tr><td height="20"><a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/index.html" target="_top"><span class="currentmanual">&nbsp; </span></a>
+
+<span class="separ"> &gt; </span><span class="separ"> &gt; </span><a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex.html"><span class="currentpath"></span></a><a name="firstpage">ILOG  CPLEX File Formats</a><span class="separ"> &gt; </span><a href="./CPLEX_LP File Format_files/CPLEX_LP File Format.html"><span class="currentpath">LP File Format</span></a></td></tr></tbody></table><table width="98%" class="navtable" summary="Navigation table">
+<tbody><tr>
+<td align="left">
+<a name="162381">
+<h2 class="Heading1">LP File Format
+</h2>
+</a></td>
+   <td align="right" valign="top">    
+    <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/manualIX.html" class="bluelink">
+    <span class="pagenav">INDEX</span></a>
+    <img src="./CPLEX_LP File Format_files/title_gray.gif" alt="Gray bullet">
+    <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex4.html" class="bluelink">
+    <span class="pagenav">PREVIOUS</span></a>
+    <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex6.html" class="bluelink">
+    <span class="pagenav">NEXT</span></a>
+   </td></tr>
+ </tbody></table>
+<hr size="1" noshade="" width="100%">
+<a name="162385"><p class="Body">
+ILOG  CPLEX provides a facility for entering a problem in a natural, algebraic LP formulation from the keyboard. The problem can be modified and saved from within ILOG  CPLEX. This procedure is one way to create a file in a format that ILOG  CPLEX can read. An alternative technique is to create a similar file using a standard text editor and to read it into ILOG  CPLEX.
+</p>
+</a><a name="162398"></a><p class="Body"><a name="162398">
+The ILOG  CPLEX LP format is provided as an input alternative to the MPS file format. An LP format file may be easier to generate than an MPS file if your problem already exists in an algebraic format or if you have an application which generates the problem file more readily in algebraic format (such as a C application). </a><a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/usrcplex/manageIO3.html#1005404" target="ManualBody" onclick="parent.ManualContents.location.href=&#39;../usrcplex/manualTOC.html&#39;" class="bluelink"><em class="emphasis">Working with LP Files</em></a> explains the implications of using LP format rather than MPS format.
+</p>
+<a name="162405"><p class="Body">
+ILOG  CPLEX accepts any problem saved in an ASCII file provided that it adheres to the following syntax rules.
+</p>
+</a><ol><a name="162405">
+</a><li value="1.	" class="Numbered"><a name="162405"></a><a name="162407">
+Anything that follows a backslash (\) is a comment and is ignored until a return is encountered. Blank lines are also ignored. Blank lines and comment lines may be placed anywhere and as frequently as you want in the file.
+</a></li><li value="2.	" class="Numbered"><a name="165881">
+In general, white space between characters is irrelevant as it is skipped when a file is read. However, white space is not allowed in the keywords used to introduce a new section, such as <code class="code">MAX</code>, <code class="code">MIN</code>, <code class="code">ST</code>, or <code class="code">BOUNDS</code>. Also the keywords must be separated by white space from the rest of the file and must be at the beginning of a line. The maximum length for any name is 255.  The maximum length of any line of input is 510.
+</a></li><a name="165881">
+</a><div class="IndentedL1"><a name="165881"></a><a name="162412">
+Skipping spaces may cause ILOG  CPLEX to misinterpret (and accept) an invalid entry, such as the following: <table class="CodeL1Table" summary="Code table">
+<tbody><tr><td><pre><a name="162419"><span class="CodeInTable"> x1 x2 = 0
+</span></a></pre></td></tr>
+
+</tbody></table>
+ 
+</a></div><a name="162412">
+</a><div class="IndentedL1"><a name="162412"></a><a name="162420">
+If the user intended to enter that example as a nonlinear constraint—not valid in LP format—ILOG  CPLEX would instead interpret it as a constraint specifying that one variable named <code class="code">x1x2</code> must be equal to zero.
+</a></div><a name="162420">
+</a><div class="IndentedL1"><a name="162420"></a><a name="166966">
+To indicate a quadratic constraint in this section, use explicit notation for multiplication and exponeniation (not space).
+</a></div><a name="166966">
+
+</a><li value="3.	" class="Numbered"><a name="166966"></a><a name="162424">
+The problem statement must begin with the word <code class="code">MINIMIZE</code> or <code class="code">MAXIMIZE</code>, <code class="code">MINIMUM</code> or <code class="code">MAXIMUM</code>, or the abbreviations <code class="code">MIN</code> or <code class="code">MAX</code>, in any combination of upper- and lower-case characters. The word introduces the objective function section.
+</a></li><li value="4.	" class="Numbered"><a name="162426">
+Variables can be named anything provided that the name does not exceed 255 characters, all of which must be alphanumeric (a-z, A-Z, 0-9) or one of these symbols: ! " # $ % &amp; ( ) , . ; ? @ _ ` ' { } ~. Longer names are truncated to 255 characters. A variable name can not begin with a number or a period. 
+</a></li><a name="162426">
+</a><div class="IndentedL1"><a name="162426"></a><a name="162427">
+The letter <code class="code">E</code> or <code class="code">e</code>, alone or followed by other valid symbols, or followed by another <code class="code">E</code> or <code class="code">e</code>, should be avoided as this notation is reserved for exponential entries. Thus, variables can not be named <code class="code">e9</code>, <code class="code">E-24</code>, <code class="code">E8cats</code>, or other names that could be interpreted as an exponent. Even variable names such as <code class="code">eels</code> or <code class="code">example</code> can cause a read error, depending on their placement in an input line.
+</a></div><a name="162427">
+
+</a><li value="5.	" class="Numbered"><a name="162427"></a><a name="162429">
+The objective function definition must follow <code class="code">minimize</code> or <code class="code">maximize</code>. It may be entered on multiple lines as long as no variable, constant, or sense indicator is split by a return. For example, this objective function <code class="code">1x1  +  2x2  +3x3</code> can be entered like this: <table class="CodeL1Table" summary="Code table">
+<tbody><tr><td><pre><a name="162661"><span class="CodeInTable">1x1 + 2x2
+</span></a><a name="165586"><span class="CodeInTable">+ 3x3
+</span></a></pre></td></tr>
+
+</tbody></table>
+ 
+</a></li><a name="162429">
+</a><div class="IndentedL1"><a name="162429"></a><a name="162446">
+but not like this: <table class="CodeL1Table" summary="Code table">
+<tbody><tr><td><pre><a name="162663"><span class="CodeInTable">1x1 + 2x
+</span></a><a name="165588"><span class="CodeInTable">2 + 3x3         \ a bad idea
+</span></a></pre></td></tr>
+
+</tbody></table>
+
+</a></div><a name="162446">
+</a><div class="IndentedL1"><a name="162446"></a><a name="162447">
+because the second style splits the variable name <code class="code">x2</code> with a return.
+</a></div><a name="162447">
+
+</a><li value="6.	" class="Numbered"><a name="162447"></a><a name="162448">
+The objective function may be named by typing a name and a colon before the objective function. The objective function name and the colon must appear on the same line. Objective function names must conform to the same guidelines as variable names (Rule  </a><a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex5.html#162426" class="bluelink">4</a>). If no objective function name is specified, ILOG  CPLEX assigns the name <code class="code">obj</code>.
+</li><li value="7.	" class="Numbered"><a name="162455">
+The constraints section is introduced by the keyword <code class="code">subject to</code>. This expression can also appear as <code class="code">such that</code>, <code class="code">st</code>, <code class="code">S.T.</code>, or <code class="code">ST.</code> in any mix of upper- and lower-case characters. One of these expressions must precede the first constraint and be separated from it by at least one space.
+</a></li><li value="8.	" class="Numbered"><a name="162456">
+Each constraint definition must begin on a new line. A constraint may be named by typing a name and a colon before the constraint. The constraint name and the colon must appear on the same line. Constraint names must adhere to the same guidelines as variable names (Rule  </a><a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex5.html#162426" class="bluelink">4</a>). If no constraint names are specified, ILOG  CPLEX assigns the names <code class="code">c1</code>, <code class="code">c2</code>, <code class="code">c3</code>, etc.
+</li><li value="9.	" class="Numbered"><a name="162463">
+The constraints are entered in the same way as the objective function; however, a constraint must be followed by an indication of its sense and a right-hand side coefficient. The right-hand side coefficient must be typed on the same line as the sense indicator. Acceptable sense indicators are &lt;, &lt;=, =&lt;, &gt;, &gt;=, =&gt;, and =. These are interpreted as <img src="./CPLEX_LP File Format_files/lt_equal.gif">, <img src="./CPLEX_LP File Format_files/lt_equal.gif">, <img src="./CPLEX_LP File Format_files/lt_equal.gif">, <img src="./CPLEX_LP File Format_files/gtequal.gif">, <img src="./CPLEX_LP File Format_files/gtequal.gif">, <img src="./CPLEX_LP File Format_files/gtequal.gif">, and =, respectively. 
+</a></li><a name="162463">
+</a><div class="IndentedL1"><a name="162463"></a><a name="167323">
+For example, here is a named constraint: <table class="CodeL1Table" summary="Code table">
+<tbody><tr><td><pre><a name="167322"><span class="CodeInTable">time: x1 + x2 &lt;= 10
+</span></a></pre></td></tr>
+
+</tbody></table>
+ 
+</a></div><a name="167323">
+</a><div class="IndentedL1"><a name="167323"></a><a name="167329">
+Quadratic constraints are allowed in this section. They are specified inside square brackets<code class="code"> []</code>. All quadratic coefficients must appear inside square brackets. Multiple square bracket sections may be specified. Inside of the square brackets, two variables are multiplied by an asterisk (<code class="code">*</code>).
+</a></div><a name="167329">
+
+</a><li value="10.	" class="Numbered"><a name="167329"></a><a name="162472">
+The optional <code class="code">bounds</code> section follows the mandatory constraint section. It is preceded by the word <code class="code">bounds</code> or <code class="code">bound</code> in any mix of lower- and upper-case characters.
+</a></li><li value="11.	" class="Numbered"><a name="162473">
+Each bound definition must begin on a new line. The format for a bound is ln  <img src="./CPLEX_LP File Format_files/lt_equal.gif">xn<img src="./CPLEX_LP File Format_files/lt_equal.gif">  un except in the following cases:
+</a></li><a name="162473">
+</a><div class="IndentedL1"><a name="162473"></a><a name="162474">
+Upper and lower bounds may also be entered separately as 
+</a></div><a name="162474">
+</a><div class="IndentedL2"><a name="162474"></a><a name="162858">
+ln  <img src="./CPLEX_LP File Format_files/lt_equal.gif">xn
+</a></div><div class="IndentedL2"><a name="162859">
+xn<img src="./CPLEX_LP File Format_files/lt_equal.gif">  un
+</a></div><div class="IndentedL1"><a name="162475">
+with the default lower bound of 0 (zero) and the default upper bound of +<img src="./CPLEX_LP File Format_files/infinity.gif"> remaining in effect until the bound is explicitly changed.
+</a></div><a name="162475">
+</a><div class="IndentedL1"><a name="162475"></a><a name="162476">
+Bounds that fix a variable can be entered as simple equalities. For example, <code class="code">x5  =  5.6</code> is equivalent to <code class="code">5.6  &lt;=  x5  &lt;=  5.6</code>.
+</a></div><a name="162476">
+</a><div class="IndentedL1"><a name="162476"></a><a name="162477">
+The bounds +<img src="./CPLEX_LP File Format_files/infinity.gif"> (positive infinity) and -<img src="./CPLEX_LP File Format_files/infinity.gif"> (negative infinity) must be entered as words: <code class="code">+infinity</code>, <code class="code">-infinity</code>,<code class="code"> +inf</code>, <code class="code">-inf</code>.
+</a></div><a name="162477">
+</a><div class="IndentedL1"><a name="162477"></a><a name="162478">
+A variable with a negative infinity lower bound and positive infinity upper bound may be entered as <code class="code">free</code>, in any mix of upper- and lower-case characters, with a space separating the variable name and the word <code class="code">free</code>. For example, <code class="code">x7  free</code> is equivalent to <code class="code">-  infinity  &lt;=  x7  &lt;=  +  infinity</code>.
+</a></div><a name="162478">
+
+</a><li value="12.	" class="Numbered"><a name="162478"></a><a name="162479">
+The file must end with the word <code class="code">end</code> in any combination of upper- and lower-case characters, alone on a line, when it is created with the <code class="code">enter</code> command. This word is not required for files that are read in to ILOG  CPLEX, but it is strongly recommended. Files that have been corrupted can frequently be detected by a missing last line.
+</a></li><li value="13.	" class="Numbered"><a name="162486">
+This rule applies to the ILOG  CPLEX MIP optimizer. To specify any of the variables as general integer variables, add a <code class="code">GENERAL</code> section; to specify any of the variables as binary integer variables, add a <code class="code">BINARY</code> section. The <code class="code">GENERAL</code> and <code class="code">BINARY</code> sections follow the <code class="code">BOUNDS</code> section, if one is present; otherwise, they follow the constraints section. Either of the <code class="code">GENERAL</code> or <code class="code">BINARY</code> sections can precede the other. The <code class="code">GENERAL</code> section is preceded by the word <code class="code">GENERAL</code>, <code class="code">GENERALS</code>, or <code class="code">GEN</code> in any mix of upper- and lower-case characters which must appear alone on a line. The following line or lines should list the names of all variables which are to be restricted to general integer values, separated by at least one space. The <code class="code">BINARY</code> section is preceded by the word <code class="code">BINARY</code>, <code class="code">BINARIES</code>, or <code class="code">BIN</code> in any mix of upper- and lower-case characters which must appear alone on a line. The following line or lines should list the names of all variables which are to be restricted to binary integer values, separated by at least one space. Binary variables are automatically given bounds of 0 (zero) and 1 (one), unless alternative bounds are specified in the <code class="code">BOUNDS</code> section, in which case a warning message is issued.
+</a></li><a name="162486">
+</a><div class="IndentedL1"><a name="162486"></a><a name="162505">
+Here is an example of a problem formulation in LP format where <code class="code">x4</code> is a general integer: <table class="CodeL1Table" summary="Code table">
+<tbody><tr><td><pre><a name="162676"><span class="CodeInTable">Maximize
+</span></a><a name="165591"><span class="CodeInTable"> obj: x1 + 2 x2 + 3 x3 + x4
+</span></a><a name="165592"><span class="CodeInTable">Subject To
+</span></a><a name="165593"><span class="CodeInTable"> c1: - x1 + x2 + x3 + 10 x4 &lt;= 20
+</span></a><a name="165594"><span class="CodeInTable"> c2: x1 - 3 x2 + x3 &lt;= 30
+</span></a><a name="165595"><span class="CodeInTable"> c3: x2 - 3.5 x4 = 0
+</span></a><a name="165596"><span class="CodeInTable">Bounds
+</span></a><a name="165597"><span class="CodeInTable"> 0 &lt;= x1 &lt;= 40
+</span></a><a name="165598"><span class="CodeInTable"> 2 &lt;= x4 &lt;= 3
+</span></a><a name="165599"><span class="CodeInTable">General
+</span></a><a name="165600"><span class="CodeInTable"> x4
+</span></a><a name="165601"><span class="CodeInTable">End
+</span></a></pre></td></tr>
+
+</tbody></table>
+ 
+</a></div><a name="162505">
+</a><div class="IndentedL1"><a name="162505"></a><a name="162506">
+If branching priorities, branching directions, or special ordered sets exist, enter this information through ORD and SOS files, as documented in </a><a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex15.html#162969" class="bluelink"><em class="emphasis">ORD File Format</em></a> and <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex17.html#161091" class="bluelink"><em class="emphasis">SOS File Format</em></a>.
+</div>
+
+<li value="14.	" class="Numbered"><a name="162647">
+This rule applies to the ILOG  CPLEX MIP optimizer. To specify any of the variables as semi-continuous variables, that is as variables that may take the value <code class="code">0</code> or values between the specified lower and upper bounds, use a <code class="code">SEMI-CONTINUOUS</code> section. This section must follow the <code class="code">BOUNDS</code>, <code class="code">GENERALS</code> and <code class="code">BINARIES</code> sections. The <code class="code">SEMI-CONTINUOUS</code> section is preceded by the keyword <code class="code">SEMI-CONTINUOUS</code>, <code class="code">SEMI</code>, or <code class="code">SEMIS</code>. The following line or lines should list the names of all the variables which are to be declared semi-continuous, separated by at least one space.
+</a></li><div class="ShortCodeL1"><a name="162649">
+<code class="code">Semi-continuous
+</code>
+</a></div><div class="ShortCodeL1"><a name="162650">
+<code class="code">x1 x2 x3
+</code>
+</a></div><li value="15.	" class="Numbered"><a name="162651">
+This rule applies to the ILOG  CPLEX MIP optimizer. To specify special ordered sets, use an SOS section, which is preceded by the SOS keyword. The SOS section should follow the Bounds, General, Binaries and Semi-Continuous sections. Special ordered sets of type 1 require that, of the variables in the set, one at most may be non-zero. Special ordered sets of type 2 require that at most two variables in the set may be non-zero, and if there are two non-zeros, they must be adjacent. Adjacency is defined by the weights, which must be unique within a set given to the variables. The sorted weights define the order of the special ordered set. For MIP branch and cut, the order is used to determine how the variables are branched upon. See the <em class="emphasis">CPLEX User's Manual</em> for more information. The type of set is specified by either of the S1 or S2 keywords followed by a double colon. The set member names are listed on this line or lines, with their weights. Variable names and weights are separated by a colon, for example:
+</a></li><div class="ShortCodeL1"><a name="162655">
+SOS
+
+</a></div><div class="ShortCodeL1"><a name="162656">
+  S1::  x1:10  x2:13
+
+</a></div><li value="16.	" class="Numbered"><a name="166065">
+ This rule applies to the ILOG  CPLEX barrier optimizer for quadratic programming problems (QPs). Quadratic coefficients may appear in the objective function. (If there are quadratically constrained variables in the problem, see rule </a><a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex5.html#162426" class="bluelink">4</a>,  rule <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex5.html#162463" class="bluelink">9</a>, and <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/usrcplex/solveQCP.html#645397" target="ManualBody" onclick="parent.ManualContents.location.href=&#39;../usrcplex/manualTOC.html&#39;" class="bluelink"><em class="emphasis">Solving Problems with Quadratic Constraints (QCP)</em></a> in the <em class="emphasis">CPLEX User's Manual</em>) 
+</li>
+<div class="IndentedL1"><a name="166974">
+The algebraic coefficients of the function x'Qx are specified inside square brackets<code class="code"> []</code>. The square brackets must be followed by a divide sign followed by the number 2.  This convention denotes that all coefficients inside the square brackets will be divided by 2 in evaluating the quadratic terms of the objective function. All quadratic coefficients must appear inside square brackets. Multiple square bracket sections may be specified.
+</a></div><a name="166974">
+</a><div class="IndentedL1"><a name="166974"></a><a name="166067">
+Inside of the square brackets, two variables are multiplied by an asterisk (<code class="code">*</code>). For example, <code class="code">[4x*y]</code> indicates that the coefficients of both of the off-diagonal terms of Q, corresponding to the variables <code class="code">x</code> and <code class="code">y</code> in the model are 2, since <code class="code">4x*y</code> equals <code class="code">2x*y  +  2x*y</code>. Each pair of off-diagonal terms of Q is specified only once. ILOG  CPLEX automatically creates both off-diagonal entries of Q. Diagonal terms in Q (that is, terms with an exponent of 2) are indicated by the carat (<code class="code">^</code>) followed by 2. For example, <code class="code">4x^2</code> indicates that the coefficient of the diagonal term of Q corresponding to the variable <code class="code">x</code> in the model is 4.
+</a></div><a name="166067">
+</a><div class="IndentedL1"><a name="166067"></a><a name="166182">
+For example, this problem <table class="NoBorder" cellpadding="5" cellspacing="0" summary="No border table">
+
+<tbody><tr valign="top"><td><a name="166073"><div class="CellBody">
+Minimize&nbsp;</div></a></td><td><a name="166075"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166077"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166079"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166081"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166083"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166085"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166087"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166089"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166091"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166093"><div class="CellBody">
+<br>&nbsp;</div></a></td></tr>
+<tr valign="top"><td><a name="166095"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166097"><div class="CellBody">
+a&nbsp;</div></a></td><td><a name="166099"><div class="CellBody">
++&nbsp;</div></a></td><td><a name="166101"><div class="CellBody">
+b&nbsp;</div></a></td><td><a name="166103"><div class="CellBody">
++&nbsp;</div></a></td><td><a name="166105"><div class="CellBody">
+1/2&nbsp;</div></a></td><td><a name="166107"><div class="CellBody">
+(a2&nbsp;</div></a></td><td><a name="166109"><div class="CellBody">
++&nbsp;</div></a></td><td><a name="166111"><div class="CellBody">
+4ab&nbsp;</div></a></td><td><a name="166113"><div class="CellBody">
++&nbsp;</div></a></td><td><a name="166115"><div class="CellBody">
+7b2)&nbsp;</div></a></td></tr>
+<tr valign="top"><td><a name="166117"><div class="CellBody">
+subject to&nbsp;</div></a></td><td><a name="166119"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166121"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166123"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166125"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166127"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166129"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166131"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166133"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166135"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166137"><div class="CellBody">
+<br>&nbsp;</div></a></td></tr>
+<tr valign="top"><td><a name="166139"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166141"><div class="CellBody">
+a&nbsp;</div></a></td><td><a name="166143"><div class="CellBody">
++&nbsp;</div></a></td><td><a name="166145"><div class="CellBody">
+b&nbsp;</div></a></td><td><a name="166147"><div class="CellBody">
+<img src="./CPLEX_LP File Format_files/gtequal.gif">&nbsp;</div></a></td><td><a name="166149"><div class="CellBody">
+10&nbsp;</div></a></td><td><a name="166151"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166153"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166155"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166157"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166159"><div class="CellBody">
+<br>&nbsp;</div></a></td></tr>
+<tr valign="top"><td><a name="166161"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166163"><div class="CellBody">
+a,&nbsp;</div></a></td><td><a name="166165"><div class="CellBody">
+b&nbsp;</div></a></td><td><a name="166167"><div class="CellBody">
+<img src="./CPLEX_LP File Format_files/gtequal.gif">&nbsp;</div></a></td><td><a name="166169"><div class="CellBody">
+0&nbsp;</div></a></td><td><a name="166171"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166173"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166175"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166177"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166179"><div class="CellBody">
+<br>&nbsp;</div></a></td><td><a name="166181"><div class="CellBody">
+<br>&nbsp;</div></a></td></tr>
+
+</tbody></table>
+ 
+</a></div><a name="166182">
+</a><div class="IndentedL1"><a name="166182"></a><a name="166193">
+in LP format looks like this: <table class="CodeL1Table" summary="Code table">
+<tbody><tr><td><pre><a name="166187"><span class="CodeInTable">Minimize
+</span></a><a name="166188"><span class="CodeInTable">obj: a + b + [ a^2 + 4 a * b + 7 b^2 ]/2
+</span></a><a name="166189"><span class="CodeInTable">Subject To
+</span></a><a name="166190"><span class="CodeInTable">c1: a + b &gt;= 10
+</span></a><a name="166192"><span class="CodeInTable">End
+</span></a></pre></td></tr>
+
+</tbody></table>
+
+</a></div><a name="166193">
+
+</a></ol><a name="166193">
+
+<hr size="1" noshade="" width="100%">
+
+ <table width="98%" class="navtable" summary="Navigation table">
+  <tbody><tr>
+   <td class="legalpart" align="left">
+   Copyright © 1987-2003 ILOG, S.A. All rights reserved. 
+   <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/globalfiles/copyright.html" target="ManualBody" class="bluelink">Legal terms.</a> 
+   </td>
+
+   <td align="right">
+    <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex4.html" class="bluelink">
+    <span class="pagenav">PREVIOUS</span></a>
+   
+    <a href="http://www.iro.umontreal.ca/~gendron/IFT6551/CPLEX/HTML/reffileformatscplex/reffileformatscplex6.html" class="bluelink">
+    <span class="pagenav">NEXT</span></a>
+   </td></tr>
+ </tbody></table>
+
+
+</a></body></html>
