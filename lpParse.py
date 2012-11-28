@@ -1,12 +1,20 @@
+# TODO: full command line options through optparse or argparse
+# clean up/double check of code
+# focus on output objects, and document clearly
+
 from pyparsing import *
 from sys import argv
 
-from lpParse_f import multiRemove
+from lpParse_f import Matrix, multiRemove
 
 #name char ranges for objective, constraint or variable
 allNameChars = alphanums + "!\"#$%&()/,.;?@_'`{}|~"
 firstChar = multiRemove(allNameChars, nums + "eE.") #<- can probably use CharsNotIn instead
-name = Word(firstChar, allNameChars, max=255).setResultsName("name")
+name = Word(firstChar, allNameChars, max=255)
+keywords = ["inf", "infinity", "max", "maximum", "maximize", "min", "minimum", "minimize", "s.t.", "st", "bound", "bounds", "bin", "binaries", "binary", "gen",  "general", "end"]
+pyKeyword = MatchFirst(map(CaselessKeyword, keywords))
+validName = ~pyKeyword + name
+validName = validName.setResultsName("name")
 
 colon = Suppress(oneOf(": ::"))
 plusMinus = oneOf("+ -")
@@ -36,15 +44,15 @@ coef = plusMinus + Optional(number, "1")
 coef.setParseAction(lambda tokens: eval("".join(tokens)))
 
 # variable (coefficient and name)
-firstVar = Group(firstVarCoef.setResultsName("coef") + name.setResultsName("name"))
-var = Group(coef.setResultsName("coef") + name.setResultsName("name"))
+firstVar = Group(firstVarCoef.setResultsName("coef") + validName)
+var = Group(coef.setResultsName("coef") + validName)
 
 # expression
 varExpr = firstVar + ZeroOrMore(var)
 varExpr = varExpr.setResultsName("varExpr")
 
 # objective
-objective = Optional(name + colon) + varExpr
+objective = Optional(validName + colon) + varExpr
 objective = objective.setResultsName("objective")
 
 # constraint rhs
@@ -53,31 +61,31 @@ rhs = rhs.setResultsName("rhs")
 rhs.setParseAction(lambda tokens: eval("".join(tokens)))
 
 # constraints
-constraint = Group(Optional(name + colon) + varExpr + sense + rhs)
+constraint = Group(Optional(validName + colon) + varExpr + sense + rhs)
 constraints = ZeroOrMore(constraint)
 constraints = constraints.setResultsName("constraints")
 
 # bounds
 numberOrInf = number | Combine(plusMinus + inf)
-sensestmt = Group(Optional(numberOrInf + sense) + name + Optional(sense + numberOrInf))
-freeVar = Group(name + Literal("free"))
+sensestmt = Group(Optional(numberOrInf + sense) + validName + Optional(sense + numberOrInf))
+freeVar = Group(validName + Literal("free"))
 
 boundstmt = freeVar | sensestmt 
-bounds = boundsTag + ZeroOrMore(boundstmt).setResultsName("bounds") + ~FollowedBy(genTag)
+bounds = boundsTag + ZeroOrMore(boundstmt).setResultsName("bounds")
 
 # generals
-generals = genTag + ZeroOrMore(name).setResultsName("generals") 
+generals = genTag + ZeroOrMore(validName).setResultsName("generals") 
 
 # binaries
-binaries = binTag + ZeroOrMore(name).setResultsName("binaries")
+binaries = binTag + ZeroOrMore(validName).setResultsName("binaries")
 
 varInfo = ZeroOrMore(bounds | generals | binaries)
 
-#TODO: how to handle "bounds" scooping up "generals" and "binaries" when keyword markers are valid variable names
-
-#TODO: should ignore comments
 grammar = objTag + objective + constraintsTag + constraints + varInfo + endTag
 
+# commenting
+commentStyle = Literal("\\") + restOfLine
+grammar.ignore(commentStyle)
 
 fp = open(argv[1])
 fullDataString = fp.read()
@@ -85,8 +93,7 @@ fp.close()
 
 full = grammar.parseString(fullDataString)
 
-print full
-#print dir(full)
+#print full
 
 o = full.objective
 print "Objective: %s"%o.objSense
@@ -94,22 +101,19 @@ print o.name, o.varExpr
 
 print "\nConstraints"
 for c in full.constraints:
-	print c.name, c.varExpr, c.sense, c.rhs
+    print c.name, c.varExpr, c.sense, c.rhs
 
 print "\nBounds"
 for b in full.bounds:
-	print b
+    print b
 
 print "\nGenerals"
 for g in full.generals:
-	print g
+    print g
 
 print "\nBinaries"
 for b in full.binaries:
-	print b
+    print b
 
-#for l in data:
-#    token = grammar.parseString(l)
-#    
-#    for v in token.varExpr:
-#        print v.name, v.sign, v.coef
+
+

@@ -1,3 +1,4 @@
+\* classroomAssignmentSP *\
 max
 obj: x1 + sdfdf5343
 st
@@ -14,4 +15,7 @@ x2 => 1
 GEN
 x4 x6
 sdfdfdf
+binaries
+this
+that
 END
