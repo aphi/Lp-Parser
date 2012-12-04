@@ -22,7 +22,7 @@ class Matrix:
         def __init__(self, bounds, category, name):
             self.name = name
             self.bounds = bounds # a tuple (lb, ub)
-            self.category = category            
+            self.category = category
 
     def __init__(self):
         self.objective = Objective(name, sense, expression)

@@ -1,11 +1,15 @@
 # TODO: full command line options through optparse or argparse
 # clean up/double check of code
+# work out elegant error handling
 # focus on output objects, and document clearly
+
+# ideally we would shift any constraints from the A matrix which only pertain to one variable into the var bounds section
 
 from pyparsing import *
 from sys import argv
 
-from lpParse_f import Matrix, multiRemove
+from ordereddict import OrderedDict as odict
+from lpParse_f import Matrix, multiRemove, setBounds
 
 #name char ranges for objective, constraint or variable
 allNameChars = alphanums + "!\"#$%&()/,.;?@_'`{}|~"
@@ -38,10 +42,10 @@ endTag = CaselessLiteral("end")
 
 # coefficient on a variable (includes sign)
 firstVarCoef = Optional(plusMinus, "+") + Optional(number, "1")
-firstVarCoef.setParseAction(lambda tokens: eval("".join(tokens)))
+firstVarCoef.setParseAction(lambda tokens: eval("".join(tokens))) #TODO: can't this just be eval(tokens[0] + tokens[1])?
 
 coef = plusMinus + Optional(number, "1")
-coef.setParseAction(lambda tokens: eval("".join(tokens)))
+coef.setParseAction(lambda tokens: eval("".join(tokens))) #TODO: can't this just be eval(tokens[0] + tokens[1])?
 
 # variable (coefficient and name)
 firstVar = Group(firstVarCoef.setResultsName("coef") + validName)
@@ -95,17 +99,63 @@ full = grammar.parseString(fullDataString)
 
 #print full
 
+outputObjective = {}
+
 o = full.objective
 print "Objective: %s"%o.objSense
 print o.name, o.varExpr
+outputObjective["sense"] = o.objSense
+outputObjective["name"] = o.name
+outputObjective["expression"] = {}
+for v in o.varExpr:
+    outputObjective["expression"][v.name] = v.coef 
+
+outputConstraints = {}
+
+senseLiterals = {"<":"le", "<=":"le", "=<":"le", "=":"eq", ">":"ge", ">=":"ge", "=>":"ge"}
 
 print "\nConstraints"
 for c in full.constraints:
-    print c.name, c.varExpr, c.sense, c.rhs
+    outputConstraints[c.name] = {}
+    outputConstraints[c.name]["name"] = c.name
+    outputConstraints[c.name]["rhs"] = c.rhs
+    outputConstraints[c.name]["sense"] = senseLiterals[sense]
+    outputConstraints[c.name]["expression"] = {}
+    for v in c.varExpr:
+        outputConstraints[c.name]["expression"][v.name] = v.coef
 
+outputVarRanges = {}
 print "\nBounds"
 for b in full.bounds:
-    print b
+    if len(b) == 2: # free var
+        outputVarRanges[b[0]] = {"lb":None, "ub":None}
+        
+    elif len(b) == 3: # one sided ineq
+
+        setBounds(outputVarRanges, b)
+        sense = senseLiterals[b[1]]
+
+        if hasattr(b[0], "name"):
+            if sense == "le": # v <= b[2]
+                outputVarRanges[b[0]] = {"lb":None, "ub":b[2]}
+            elif sense == "ge": # v >= b[2]
+                outputVarRanges[b[0]] = {"lb":b[2], "ub":None}
+            else: # v == b[2]
+                outputVarRanges[b[0]] = {"lb":b[2], "ub":b[2]}
+
+        elif hasattr(b[2], "name"):
+            if sense == "le": # b[0] <= v
+                outputVarRanges[b[2]] = {"lb":b[0], "ub":None}
+            elif sense == "ge": # b[0] >= v
+                outputVarRanges[b[2]] = {"lb":None, "ub":b[0]}
+            else: # b[0] == v
+                outputVarRanges[b[2]] = {"lb":b[0], "ub":b[0]}
+        
+    
+    elif len(b) == 5: # two sided ineq
+        
+        outputVarRanges[b[2]] = {"lb": , "ub":}
+
 
 print "\nGenerals"
 for g in full.generals:
@@ -114,6 +164,4 @@ for g in full.generals:
 print "\nBinaries"
 for b in full.binaries:
     print b
-
-
 
