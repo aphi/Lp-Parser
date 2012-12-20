@@ -10,7 +10,7 @@ x2 => 1
 bounds
 x1 free
 x2 => 1
-100>= x2dfsdf => 1
+100>= x2dfsdf => -1
 -infinity <= qwer < +inf
 GEN
 x4 x6
