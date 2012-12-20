@@ -1,11 +1,7 @@
-Very small and simple parser for CPLEX LP files into logical Python data structures
+Very small and simple parser for .LP files into logical Python data structures
 
-.LP file parser to generate Python objects representing the problem (aMatrix, rowOrder, colOrder, objective, pName, colRange)
+Usage:
+>>> import lpParse
+>>> m = lpParse.read("<lpFile>")
 
-parser is able to parse constraint and objective expressions
-
-
-TODO:
-need to implement the other lp file rules regarding variable bounds, commenting etc
-
-other TODOs in code
+where m is a generic Matrix format as defined in lpParse_f
